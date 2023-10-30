@@ -8,23 +8,45 @@ const todoInputType = z.object({
 })
 
 const appRouter = router({
-    createTodo: publicProcedure
-        .input(todoInputType)
+
+    signUp: publicProcedure
+        .input(z.object({
+            email: z.string(),
+            password: z.string()
+        }))
         .mutation(async (opts) => {
-            console.log("hii there")
-            const title = opts.input.title;
-            const description = opts.input.description
+            // context
 
-            //  Do db Stuff here
+            let email = opts.input.email
+            let password = opts.input.password
 
+            // Do DataBase Stuff here
+
+            let token = "12328754"
             return {
-                id: '1',
+                token
             }
+        }),
+    creareTodo: publicProcedure
+        .input(z.object({
+            title: z.string()
+        }))
+        .mutation(async (opts) => {
+            console.log(opts.ctx.username)
         })
+
 });
 
 const server = createHTTPServer({
     router: appRouter,
+    createContext(opts) {
+        let authHeader = opts.req.headers["authorization"]
+        console.log(authHeader)
+
+        return {
+            username: "12324"
+        }
+    }
 });
 
 server.listen(3000);

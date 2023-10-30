@@ -17,14 +17,20 @@ const trpc = (0, client_1.createTRPCProxyClient)({
     links: [
         (0, client_1.httpBatchLink)({
             url: 'http://localhost:3000',
+            headers() {
+                return __awaiter(this, void 0, void 0, function* () {
+                    return {
+                        Authorization: "Bearer 123"
+                    };
+                });
+            }
         }),
     ],
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        let resposne = yield trpc.createTodo.mutate({
-            title: "go to gym",
-            description: "Hit the gym"
+        let resposne = yield trpc.creareTodo.mutate({
+            title: "sarfrazk7858@123.com",
         });
         console.log(resposne);
     });

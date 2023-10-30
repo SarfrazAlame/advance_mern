@@ -8,14 +8,18 @@ const trpc = createTRPCProxyClient<AppRouter>({
     links: [
         httpBatchLink({
             url: 'http://localhost:3000',
+            async headers(){
+                return {
+                    Authorization:"Bearer 123"
+                }
+            }
         }),
     ],
 });
 
 async function main() {
-    let resposne = await trpc.createTodo.mutate({
-        title: "go to gym",
-        description: "Hit the gym"
+    let resposne = await trpc.creareTodo.mutate({
+        title: "sarfrazk7858@123.com",
     })
 
     console.log(resposne)
